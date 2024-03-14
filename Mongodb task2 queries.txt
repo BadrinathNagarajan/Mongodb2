@@ -1,0 +1,41 @@
+
+
+1.db.tasks.aggregate({
+   $lookup:
+     {
+       from: 'topics',
+       localField: 'topic_id',
+       foreignField: 'topic_id',
+       as: 'data'
+     }
+})
+
+2.db.company_drive.find({drive_date:$gte: ISODate("2021-10-05"){$lte: ISODate("2021-10-31")}})
+
+3.db.users.aggregate({
+   $lookup:
+     {
+       from: 'company_drives',
+       localField: 'user_id',
+       foreignField: 'user_id',
+       as: 'data'
+     }
+})
+
+4.db.codekata.find({},{no_of_problems_solved:1,_id:0})
+
+6.db.attendance.aggregate([{
+$lookup:
+     {
+       from: 'tasks',
+       localField: 'user_id',
+       foreignField: 'user_id',
+       as: 'data'
+     }},
+{
+
+        $match: {
+            present:true
+        }
+    }
+])
